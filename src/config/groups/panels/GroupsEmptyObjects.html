@@ -1,0 +1,16 @@
+<div class="layout-column layout-align-center-center flex bb-empty">
+	<div class="pip-empty">
+		<img src="images/empty/empty.svg" class="pip-pic">
+		<div class="pip-text">
+			{{::'GROUPS_EMPTY_OBJECTS' | translate}}
+		</div>
+		<div class="pip-actions layout-row layout-align-end-center">
+			<md-button class="color-accent-bg tm12 flex" aria-label="Add" xxxng-if="$ctrl.accessConfig.addGroup" ng-click="$ctrl.addObjects()"
+			           ng-disabled="$ctrl.transaction.busy() || !$ctrl.accessConfig.addGroup">
+
+				{{::'ADD_OBJECTS' | translate}}
+			</md-button>
+		</div>
+	</div>
+
+</div>

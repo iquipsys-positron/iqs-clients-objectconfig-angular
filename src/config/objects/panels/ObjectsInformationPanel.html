@@ -1,0 +1,193 @@
+<div ng-if="$ctrl.object">
+	<div class="pip-ref-list lp24 rp24 tp0 bp0">
+		<div class="layout-row layout-align-start-center iqs-inform-panel pip-ref-list-item " ng-if="$ctrl.categoryCollection[$ctrl.object.category].title">
+
+			<md-icon md-svg-icon="iqs:category" class="iqs-icon lm0 rm16"></md-icon>
+			<div class="pip-content tp8 bp8">
+				<div class="text-subhead1">
+					{{ $ctrl.categoryCollection[$ctrl.object.category].title | translate }}
+				</div>
+				<div class="pip-subtitle  color-secondary-text">
+					{{ ::'CATEGORY' | translate }}
+				</div>
+			</div>
+		</div>
+
+		<div class="layout-row layout-align-start-center iqs-inform-panel pip-ref-list-item " ng-if="$ctrl.typeCollection[$ctrl.object.type].title">
+
+			<md-icon md-svg-icon="iqs:obj-type" class="iqs-icon lm0 rm16"></md-icon>
+			<div class="pip-content tp8 bp8">
+				<div class="text-subhead1">
+					{{ $ctrl.typeCollection[$ctrl.object.type].title | translate }}
+				</div>
+				<div class="pip-subtitle color-secondary-text">
+					{{::'TYPE' | translate}}
+				</div>
+			</div>
+		</div>
+
+		<div class="layout-row layout-align-start-center iqs-inform-panel pip-ref-list-item" ng-if="$ctrl.objectGroups.length > 0 && !$ctrl.editable">
+
+			<md-icon md-svg-icon="iqs:team" class="iqs-icon lm0 rm16"></md-icon>
+			<div class="pip-content tp8 bp8">
+				<div class="text-subhead1">
+					<span ng-repeat="group in $ctrl.objectGroups track by $index">
+						{{ group.name }}<span class="rp4" ng-if="!$last">, </span>
+					</span>
+				</div>
+				<div class="pip-subtitle color-secondary-text">
+					{{ ::'GROUPS' | translate }}
+				</div>
+			</div>
+		</div>
+
+		<div class="layout-row layout-align-start-center iqs-inform-panel pip-ref-list-item" ng-if="$ctrl.object.time && !$ctrl.editable ">
+
+			<md-icon md-svg-icon="iqs:comm-on" class="iqs-icon lm0 rm16" ng-if="$ctrl.iqsStatusService.status($ctrl.object.time).active">
+			</md-icon>
+			<md-icon md-svg-icon="iqs:comm-off" class="iqs-icon lm0 rm16" ng-if="!$ctrl.iqsStatusService.status($ctrl.object.time).active">
+			</md-icon>
+			<div class="pip-content tp8 bp8">
+				<div class="text-subhead1">
+					{{ $ctrl.iqsStatusService.status($ctrl.object.time).time | formatLongElapsed }}
+				</div>
+				<div class="pip-subtitle color-secondary-text">
+					{{ $ctrl.iqsStatusService.status($ctrl.object.time).status | translate }}
+				</div>
+			</div>
+		</div>
+
+		<div class="layout-row layout-align-start-center iqs-inform-panel pip-ref-list-item" ng-if="$ctrl.object.pin">
+
+			<md-icon md-svg-icon="icons:key" class="iqs-icon lm0 rm16"></md-icon>
+			<div class="pip-content tp8 bp8">
+				<div class="text-subhead1">
+					{{ $ctrl.object.pin }}
+				</div>
+				<div class="pip-subtitle color-secondary-text">
+					{{ :: 'PIN' | translate }}
+				</div>
+			</div>
+		</div>
+
+		<div class="layout-row layout-align-start-center iqs-inform-panel pip-ref-list-item" ng-if="$ctrl.object.phone">
+
+			<md-icon md-svg-icon="icons:phone" class="iqs-icon lm0 rm16"></md-icon>
+			<div class="pip-content tp8 bp8">
+				<div class="text-subhead1">
+					{{ $ctrl.object.phone }}
+				</div>
+				<div class="pip-subtitle color-secondary-text">
+					{{:: 'PHONE' | translate}}
+				</div>
+			</div>
+		</div>
+
+		<div class="layout-row layout-align-start-center iqs-inform-panel pip-ref-list-item" ng-if="$ctrl.object.email">
+
+			<md-icon md-svg-icon="icons:message" class="iqs-icon lm0 rm16"></md-icon>
+			<div class="pip-content tp8 bp8">
+				<div class="text-subhead1">
+					{{ $ctrl.object.email }}
+				</div>
+				<div class="pip-subtitle color-secondary-text">
+					{{ :: 'EMAIL' | translate }}
+				</div>
+			</div>
+		</div>
+
+		<div class="layout-row layout-align-start-center iqs-inform-panel pip-ref-list-item">
+			<md-icon md-svg-icon="icons:key" class="iqs-icon lm0 rm16"></md-icon>
+			<div class="pip-content tp8 bp8">
+				<div class="text-subhead1">
+					{{ $ctrl.object.id }}
+				</div>
+				<div class="pip-subtitle color-secondary-text">
+					{{ ::'OBJECT_ID' | translate }}
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="divider-top tp24 tm16 bp4 pip-ref-list" ng-if="$ctrl.object.category == 'person' && ($ctrl.editable || !(!$ctrl.editable && !$ctrl.car))">
+
+		<div class="color-secondary-text lp16 bp8" ng-if="$ctrl.editable || !(!$ctrl.editable && !$ctrl.car)">
+
+			{{ ::'CONFIG_INFO_TITLE_ADD_CAR' | translate }}
+		</div>
+		<div ng-if="!$ctrl.car && $ctrl.editable" class="layout-column tm8" style="margin: 0 auto; width: 300px">
+			<div class="text-body2 bm8 text-center">
+				{{ :: 'CONFIG_INFO_EMPTY_CAR' | translate }}
+			</div>
+			<md-button iqs-test-attach-car class="md-raised lm0 md-accent" xxxng-if="$ctrl.accessConfig.editObject" ng-click="$ctrl.changeCar()"
+			           ng-disabled="$ctrl.transaction.busy() || !$ctrl.accessConfig.editObject">
+				{{ :: 'CONFIG_INFO_ADD_CAR' | translate }}
+			</md-button>
+		</div>
+		<div class="layout-row layout-align-start-start iqs-inform-panel iqs-big-item pip-ref-list-item" ng-if="$ctrl.car">
+			<div class="pip-pic lm16 pointer" ng-click="$ctrl.carClick()">
+				<md-icon md-svg-icon="iqs:quipment" class="iqs-icon m8" ng-if="$ctrl.car.category == 'equipment'"></md-icon>
+				<md-icon md-svg-icon="iqs:asset" class="iqs-icon m8" ng-if="$ctrl.car.category == 'asset'"></md-icon>
+			</div>
+			<div class="pip-content pip-content flex rp16">
+				<div class="pip-title">
+					{{ $ctrl.car.name }}
+				</div>
+				<div class="pip-subtitle color-secondary-text text-overflow">
+					{{ $ctrl.car | formatObjectSubtitle }}
+				</div>
+
+				<div ng-if="$ctrl.editable">
+					<md-button iqs-test-attach-car class="md-raised lm0" ng-click="$ctrl.changeCar($ctrl.car.id)" ng-disabled="$ctrl.transaction.busy() || !$ctrl.accessConfig.editObject">
+						{{ :: 'CONFIG_INFO_CHANGE_CAR' | translate }}
+					</md-button>
+					<md-button iqs-test-detach-car class="md-raised lm0" ng-click="$ctrl.deleteCarClick()" ng-disabled="$ctrl.transaction.busy() || !$ctrl.accessConfig.editObject">
+
+						{{ :: 'CONFIG_INFO_DELETE_CAR' | translate }}
+					</md-button>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	<div class="divider-top tp24 tm8 bm8 pip-ref-list" ng-if="$ctrl.editable || !(!$ctrl.editable && !$ctrl.device)">
+		<div class="color-secondary-text lp16 bp8" ng-if="$ctrl.editable || !(!$ctrl.editable && !$ctrl.device)">
+			{{ ::'CONFIG_INFO_ADD_TRACKER' | translate }}
+		</div>
+		<div ng-if="!$ctrl.device && $ctrl.editable" class="layout-column tm8" style="margin: 0 auto; width: 300px">
+			<div class="text-body2 bm8 text-center">{{:: 'CONFIG_INFO_EMPTY_DEVICE' | translate}}</div>
+			<md-button iqs-test-attach-device class="md-raised lm0 md-accent" xxxng-if="$ctrl.accessConfig.editObject" ng-click="$ctrl.changeDevice()"
+			           ng-disabled="$ctrl.transaction.busy() || !$ctrl.accessConfig.editObject">
+
+				{{ :: 'CONFIG_INFO_ADD_DEVICE' | translate }}
+			</md-button>
+		</div>
+		<div class="layout-row layout-align-start-start iqs-inform-panel iqs-big-item pip-ref-list-item" ng-if="$ctrl.device">
+			<div class="pip-pic iqs-device-icon lm16 pointer" ng-click="$ctrl.deviceClick()">
+				<md-icon md-svg-icon="iqs:tracker" class="iqs-icon m8"></md-icon>
+				<div class="iqt-device-icon-bulet iqt-device-bulet-{{$ctrl.device.status}}"></div>
+			</div>
+			<div class="pip-content flex rp16">
+				<div class="pip-title">
+					{{ $ctrl.device.label || $ctrl.device.udi }}
+				</div>
+				<div class="pip-subtitle color-secondary-text text-overflow">
+					{{ $ctrl.deviceCollection[$ctrl.device.type].title || $ctrl.device.type | translate }}
+				</div>
+
+				<div>
+					<md-button iqs-test-attach-device class="md-raised lm0" xxxng-if="$ctrl.accessConfig.editObject" ng-click="$ctrl.changeDevice($ctrl.device.id)"
+					           ng-disabled="$ctrl.transaction.busy() || !$ctrl.accessConfig.editObject">
+
+						{{ :: 'CONFIG_INFO_CHANGE_DEVICE' | translate }}
+					</md-button>
+					<md-button iqs-test-detach-device class="md-raised lm0" xxxng-if="$ctrl.accessConfig.editObject" ng-click="$ctrl.deleteClick()"
+					           ng-disabled="$ctrl.transaction.busy() || !$ctrl.accessConfig.editObject">
+
+						{{ :: 'CONFIG_INFO_DELETE_DEVICE' | translate }}
+					</md-button>
+				</div>
+			</div>
+		</div>
+	</div>

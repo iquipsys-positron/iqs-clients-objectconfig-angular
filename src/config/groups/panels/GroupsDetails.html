@@ -1,0 +1,94 @@
+<pip-document class="pip-scroll " ng-if="$ctrl.edit == 'data'">
+	<md-progress-linear md-mode="indeterminate" style="position: absolute;" 
+		ng-show="$ctrl.transaction.busy() && $ctrl.state() != 'progress'">
+	</md-progress-linear>
+	<div class="pip-header bp0 rp24 lp24 tp8" ng-if="$ctrl.state() == 'data' && !$ctrl.isPreLoading">
+		<div style="width: 100%">
+
+			<div class="pip-ref-item iqs-group-header">
+				<pip-avatar pip-id="$ctrl.collection[$ctrl.selectedIndex()].id" 
+					pip-rebind="true" pip-name="$ctrl.collection[$ctrl.selectedIndex()].name"
+					class="pip-face-md rm16">
+				</pip-avatar>
+				<div class="pip-content">
+					<p class="pip-title">{{ $ctrl.collection[$ctrl.selectedIndex()].name }}</p>
+				</div>
+			</div>
+
+			<div class="pip-ref-list">
+				<div class="layout-row layout-align-start-center pip-ref-list-item">
+					<md-icon md-svg-icon="icons:key" class="iqs-icon lm0 rm16"></md-icon>
+					<div class="pip-content tp8 bp8">
+						<div class="text-subhead1">
+							{{ $ctrl.collection[$ctrl.selectedIndex()].id }}
+						</div>
+						<div class="pip-subtitle color-secondary-text">
+							{{::'GROUP_ID' | translate}}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="pip-body p24 tp0" ng-if="$ctrl.state() == 'data' && $ctrl.collection[$ctrl.selectedIndex()].object_ids.length > 0 && !$ctrl.isPreLoading">
+		<div ng-if="$ctrl.people.length > 0">
+			<div class="color-secondary-text tm8 bm8 iqs-ccapitalize ">{{:: 'person' | translate }}</div>
+			<div ng-include="'config/groups/panels/GroupsObjectList.html'" class="pip-ref-list" ng-repeat="object in $ctrl.people track by object.id"></div>
+		</div>
+		<div ng-if="$ctrl.equipments.length > 0">
+			<div class="color-secondary-text tm8 bm8 iqs-ccapitalize ">{{:: 'equipment' | translate }}</div>
+			<div ng-include="'config/groups/panels/GroupsObjectList.html'" class="pip-ref-list" ng-repeat="object in $ctrl.equipments track by object.id"></div>
+		</div>
+		<div ng-if="$ctrl.assets.length > 0">
+			<div class="color-secondary-text tm8 bm8 iqs-ccapitalize ">{{:: 'asset' | translate }}</div>
+			<div ng-include="'config/groups/panels/GroupsObjectList.html'" class="pip-ref-list" ng-repeat="object in $ctrl.assets track by object.id"></div>
+		</div>
+	</div>
+	<div class="pip-body rp0 layout-column layout-align-center-center flex " ng-if="$ctrl.state() == 'data' && $ctrl.collection[$ctrl.selectedIndex()].object_ids.length == 0 &&!$ctrl.isPreLoading"
+		ng-include="'config/groups/panels/GroupsEmptyObjects.html'">
+	</div>
+
+	<div class="pip-body rp0 layout-column layout-align-center-center flex " ng-if="$ctrl.state() == 'empty' || $ctrl.state() == 'progress' || $ctrl.isPreLoading"
+		ng-include="'config/groups/panels/GroupsEmpty.html'">
+
+	</div>
+
+	<div class="pip-footer " style="height: 86px" ng-if="$ctrl.state() == 'data' && !$ctrl.isPreLoading">
+		<div class="pip-action-list w-stretch">
+			<md-button iqs-test-objects-add class="pip-action-list-item" 
+				ng-disabled="!$ctrl.accessConfig.addGroup"  
+				ng-click="$ctrl.addObjects()">
+				<md-icon class="pip-pic" md-svg-icon="icons:people-plus"></md-icon>
+				<div class="pip-title">
+					{{::'ADD_OBJECTS' | translate}}
+				</div>
+			</md-button>
+			<md-button iqs-test-edit class="pip-action-list-item" 
+				ng-disabled="!$ctrl.accessConfig.editGroup"  
+				ng-click="$ctrl.changeEdit($ctrl.collection[$ctrl.selectedIndex()].id)">
+
+				<md-icon class="pip-pic" md-svg-icon="icons:pen"></md-icon>
+				<div class="pip-title">
+					{{::'EDIT' | translate}}
+				</div>
+			</md-button>
+			<md-button iqs-test-delete class="pip-action-list-item" 
+				ng-disabled="!$ctrl.accessConfig.deleteGroup"  
+				ng-click="$ctrl.delete($ctrl.collection[$ctrl.selectedIndex()].id)">
+
+				<md-icon class="pip-pic" md-svg-icon="icons:trash"></md-icon>
+				<div class="pip-title">
+					{{::'DELETE' | translate}}
+				</div>
+			</md-button>
+		</div>
+	</div>
+</pip-document>
+
+<iqs-group-edit-panel ng-if="$ctrl.edit == 'edit' && $ctrl.accessConfig.editGroup && !$ctrl.isPreLoading"   
+									   iqs-change="$ctrl.currentState"
+									   iqs-edit="$ctrl.edit" iqs-group="$ctrl.collection[$ctrl.selectedIndex()]">
+</iqs-group-edit-panel>
+<iqs-group-edit-panel ng-if="$ctrl.edit == 'add' && $ctrl.accessConfig.addGroup && !$ctrl.isPreLoading"  
+									   iqs-change="$ctrl.currentState" iqs-edit="$ctrl.edit">
+</iqs-group-edit-panel>

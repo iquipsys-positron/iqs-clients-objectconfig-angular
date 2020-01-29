@@ -1,0 +1,103 @@
+<pip-document class="pip-scroll ">
+	<md-progress-linear md-mode="indeterminate" style="position: absolute;" ng-show="$ctrl.transaction.busy() && $ctrl.state() != 'progress'"></md-progress-linear>
+	<div class="pip-body">
+		<form name="form" novalidate>
+			<div class="layout-row layout-align-center-center">
+				<pip-avatar-edit pip-id="$ctrl.object.id" pip-created="$ctrl.onPictureCreated($event)" pip-changed="$ctrl.onPictureChanged($event)"
+				                 pip-default-text="'Change avatar'" pip-reset="$ctrl.isReseting()" ng-disabled="pictureDisabled || $ctrl.transaction.busy()"
+				                 pip-rebind="true">
+				</pip-avatar-edit>
+			</div>
+			<md-input-container class="md-block flex bm24">
+				<label>{{::'CATEGORY'| translate}}</label>
+				<md-select iqs-test-category ng-model="$ctrl.object.category" ng-change="$ctrl.filterTypeCollection()" required
+				           aria-label="CATEGORY" name="category" ng-disabled="$ctrl.transaction.busy()">
+					<md-option iqs-test-option-category ng-repeat="type in $ctrl.categoryCollection track by type.id" ng-value="type.id">
+						{{::type.title | translate}}
+					</md-option>
+				</md-select>
+
+				<div ng-messages="$ctrl.touchedErrorsWithHint($ctrl.form, $ctrl.form.category)" role="alert">
+					<div ng-message="required">{{ 'OBJECT_CATEGORY_REQUIRED_ERROR' | translate }}</div>
+				</div>
+			</md-input-container>
+
+			<md-input-container class="md-block flex bm24">
+				<label>{{::'TYPE'| translate}}</label>
+				<md-select iqs-test-type ng-model="$ctrl.object.type" required aria-label="TYPE" name="object_type" ng-disabled="$ctrl.transaction.busy()">
+					<md-option iqs-test-option-type ng-repeat="type in $ctrl.typeCollection  track by type.id" ng-value="type.id">
+						{{::type.title | translate}}
+					</md-option>
+				</md-select>
+
+				<div ng-messages="$ctrl.touchedErrorsWithHint($ctrl.form, $ctrl.form.object_type)" role="alert">
+					<div ng-message="required">{{ 'OBJECT_TYPE_REQUIRED_ERROR' | translate }}</div>
+				</div>
+			</md-input-container>
+
+
+			<md-input-container class="md-block flex bm0">
+				<label ng-if="$ctrl.object.category != 'person'">{{::'CONFIG_OBJECT_NAME' | translate}}</label>
+				<label ng-if="$ctrl.object.category == 'person'">{{::'CONFIG_PERSON_NAME' | translate}}</label>
+				<input iqs-test-name ng-model="$ctrl.object.name" required ng-disabled="$ctrl.transaction.busy()" aria-label="OBJECT_NAME"
+				       name="object_name" iqs-unique-validator iqs-unique-collection="$ctrl.nameCollection">
+
+				<div ng-messages="$ctrl.touchedErrorsWithHint($ctrl.form, $ctrl.form.object_name)" role="alert">
+					<div ng-message="required" ng-show="$ctrl.object.category != 'person'">{{ 'OBJECT_NAME_REQUIRED_ERROR' | translate
+						}}</div>
+					<div ng-message="required" ng-show="$ctrl.object.category == 'person'">{{ 'OBJECT_PERSON_NAME_REQUIRED_ERROR' |
+						translate }}</div>
+					<div ng-message="uniqueValidate">{{ 'OBJECT_NAME_UNIQUE_ERROR' | translate }}</div>
+				</div>
+			</md-input-container>
+
+			<md-input-container class="md-block flex bm0">
+				<label ng-if="$ctrl.object.category == 'person'">{{::'SETTINGS_BASIC_INFO_DESCRIPTION' | translate}}</label>
+				<label ng-if="$ctrl.object.category != 'person'">{{::'OBJECTS_EDIT_DESCRIPTION_ASSET' | translate}}</label>
+				<input iqs-test-description ng-model="$ctrl.object.description" ng-disabled="$ctrl.transaction.busy()">
+			</md-input-container>
+
+			<md-input-container class="md-block flex bm0" ng-if="$ctrl.object.category == 'person'">
+				<label>{{::'EMAIL' | translate}}</label>
+				<input iqs-test-email ng-model="$ctrl.object.email" aria-label="EMAIL" ng-disabled="$ctrl.transaction.busy()"
+				       iqs-email-validator ng-change="$ctrl.error=''" name="email">
+
+				<div ng-messages="$ctrl.touchedErrorsWithHint($ctrl.form, $ctrl.form.email)" role="alert">
+					<div ng-message="emailValidate">{{ 'OBJECT_EMAIL_VALIDATE_ERROR' | translate }}</div>
+				</div>
+			</md-input-container>
+
+			<md-input-container class="md-block flex bm0" ng-if="$ctrl.object.category == 'person'">
+				<label>{{::'PHONE' | translate}}</label>
+				<input iqs-test-phone ng-model="$ctrl.object.phone" aria-label="PHONE" ng-disabled="$ctrl.transaction.busy()"
+				       iqs-phone-validator ng-change="$ctrl.error=''" name="phone">
+
+				<div ng-messages="$ctrl.touchedErrorsWithHint($ctrl.form, $ctrl.form.phone)" role="alert">
+					<div ng-message="phoneValidate">{{ 'OBJECT_PHONE_VALIDATE_ERROR' | translate }}</div>
+				</div>
+			</md-input-container>
+			<md-input-container class="md-block flex bm0" ng-if="$ctrl.object.category == 'person'">
+				<label>{{::'PIN' | translate}}</label>
+				<input iqs-test-pin ng-model="$ctrl.object.pin" ng-disabled="$ctrl.transaction.busy()">
+			</md-input-container>
+
+			<md-button iqs-test-generate-pin class="md-raised m0" ng-click="$ctrl.changePin()" ng-if="$ctrl.object.category == 'person'"
+			           ng-disabled="$ctrl.transaction.busy()">
+				{{::'GENERATE_PIN' | translate }}
+			</md-button>
+		</form>
+	</div>
+
+	<div class="pip-footer " style="height: 86px">
+		<div class="pip-action-list w-stretch">
+			<md-button iqs-test-save class="pip-action-list-item" ng-click="$ctrl.saveClick()" ng-disabled="$ctrl.transaction.busy()">
+				<md-icon class="pip-pic" md-svg-icon="icons:check"></md-icon>
+				<div class="pip-title">{{::'SAVE' | translate }}</div>
+			</md-button>
+			<md-button iqs-test-cancel class="pip-action-list-item" ng-click="$ctrl.cancelClick()" ng-disabled="$ctrl.transaction.busy()">
+				<md-icon class="pip-pic" md-svg-icon="icons:cross"></md-icon>
+				<div class="pip-title">{{::'CANCEL' | translate}}</div>
+			</md-button>
+		</div>
+	</div>
+</pip-document>

@@ -1,0 +1,62 @@
+<div class="pip-main-menu" ng-class="{'pip-single-content': (($ctrl.edit == 'add' || $ctrl.edit == 'edit') && !$ctrl.pipMedia('gt-sm')) ||$ctrl.details}">
+	<div class="pip-menu layout-column iqs-menu ">
+		<div class="m16 tm8 bm8">
+			<md-button iqs-test-add class="md-fab md-accent md-fab-bottom-right" ng-if="$ctrl.state() == 'data'" ng-disabled="$ctrl.transaction.busy() || !$ctrl.accessConfig.addObject || $ctrl.isPreLoading"
+			           aria-label="add" ng-click="$ctrl.addClick()">
+
+				<md-icon md-svg-icon="icons:plus"></md-icon>
+			</md-button>
+
+			<iqs-global-search-panel ng-disabled="$ctrl.edit == 'edit' || $ctrl.edit == 'add' || $ctrl.isPreLoading || $ctrl.transaction.busy()"
+			                         iqs-search-query="$ctrl.status" iqs-cancel-callback="$ctrl.onCanselSearch()"
+			                         iqs-search-callback="$ctrl.onSearchResult(query)" iqs-default-values="$ctrl.defaultCollection"
+			                         iqs-search-collection="$ctrl.searchedCollection">
+			</iqs-global-search-panel>
+		</div>
+		<div ng-show="$ctrl.error" class="pip-page-errors">
+			<span class="pip-error-text color-error flex"> {{$ctrl.error}}</span>
+			<md-icon md-svg-icon="icons:warn-circle" class="color-error"></md-icon>
+		</div>
+		<div class="flex" style="position: relative" ng-if="($ctrl.state() == 'data' || $ctrl.edit == 'add') && !$ctrl.isPreLoading">
+			<md-list class="pip-ref-list tp0 w-stretch h-stretch iqs-abs-list" pip-selected="$ctrl.selectedIndex()" pip-select="$ctrl.selectItem($event.index)"
+			         pip-selected-watch="$ctrl.selectedIndex()">
+
+				<md-list-item class="pip-ref-list-item pip-selectable pointer selected iqs-empty-item" ng-if="$ctrl.edit == 'add'"
+				              md-ink-ripple>
+					<div class="pip-pic tm0 layout-row layout-align-center-center">
+						<md-icon class="" md-svg-icon="iqs:object"></md-icon>
+					</div>
+					<div class="pip-content">
+						<p class="text-body2 text-overflow flex">
+							{{:: "NEW_OBJECT" | translate}}
+						</p>
+					</div>
+				</md-list-item>
+
+				<md-list-item class="pip-ref-list-item {{ $ctrl.edit != 'add' && $ctrl.edit != 'edit' ? 'pip-selectable pointer' : $ctrl.edit !='add' && $ctrl.selectedIndex() == $index ? 'iqs-selected' : 'iqs-not-selectable'}}"
+				              ng-class="{'selected': $ctrl.selectedIndex() == $index && $ctrl.edit !='add' && $ctrl.pipMedia('gt-sm') }"
+				              md-ink-ripple ng-repeat="section in $ctrl.collection  track by $index">
+
+					<pip-avatar pip-id="section.id" pip-rebind="true" pip-name="section.name" class="pip-face rm16" ng-click="$ctrl.selectItem($index)">
+					</pip-avatar>
+					<div class="pip-content" ng-click="$ctrl.selectItem($index)">
+						<p class="text-body2 text-overflow flex">
+							{{ section.name }}
+						</p>
+						<p class="pip-subtitle text-overflow flex rp24 rm8">
+							{{section | formatObjectSubtitle}}
+						</p>
+					</div>
+				</md-list-item>
+			</md-list>
+		</div>
+		<div class="pip-list-container iqs-menu-empty" ng-if="($ctrl.state() == 'empty' || $ctrl.state() == 'progress' || $ctrl.isPreLoading) && $ctrl.pipMedia('gt-sm')">
+		</div>
+		<div class="pip-list-container layout-align-center-center layout-column flex" ng-include="'config/objects/panels/ObjectsEmpty.html'"
+		     ng-if="($ctrl.state() == 'empty' || $ctrl.state() == 'progress' || $ctrl.isPreLoading) && !$ctrl.pipMedia('gt-sm')">
+		</div>
+	</div>
+	<div class="pip-content-container" ng-include="'config/objects/panels/ObjectsDetails.html'">
+
+	</div>
+</div>

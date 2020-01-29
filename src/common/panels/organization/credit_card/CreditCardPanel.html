@@ -1,0 +1,89 @@
+<form name="form" novalidate autocomplete="off" ng-submit="$ctrl.onSaveClick()">
+    <input type="password" style="display:none">
+
+    <div class="layout-row layout-align-start-start flex">
+        <md-input-container class="bm0 md-block flex rm24">
+            <label>{{::'ORGANIZATIONS_CREATE_CREDIT_CARD_NUMBER_LABEL' | translate}}</label>
+            <input iqs-test-card-number type="text" value="" autocomplete="off" name="cardNumber" aria-label="CURD_NUMBER"
+                   ng-model="$ctrl.item.number" required ng-pattern="/^[ -]*(?:4[ -]*(?:\d[ -]*){11}(?:(?:\d[ -]*){3})?\d|5[ -]*[1-5](?:[ -]*[0-9]){14}|3[ -]*[47](?:[ -]*[0-9]){13})[ -]*$/" />
+            <div ng-messages="$ctrl.touchedErrorsWithHint($ctrl.form, $ctrl.form.cardNumber, true)" role="alert">
+                <div ng-message="required">{{ 'ORGANIZATIONS_CREATE_CREDIT_CARD_NUMBER_REQ_ERR' | translate }}</div>
+                <div ng-message="pattern">{{ 'ORGANIZATIONS_CREATE_CREDIT_CARD_NUMBER_PATTERN_ERR' | translate }}</div>
+            </div>
+        </md-input-container>
+
+        <md-input-container class="bm0 md-block w100">
+            <label>{{::'ORGANIZATIONS_CREATE_CREDIT_CARD_CODE_LABEL' | translate}}</label>
+            <input iqs-test-password type="password" value="" autocomplete="off" name="cardCode" aria-label="CURD_CODE"
+                   ng-model="$ctrl.item.ccv" required ng-pattern="/^[0-9]{3,4}$/" />
+            <div ng-messages="$ctrl.touchedErrorsWithHint($ctrl.form, $ctrl.form.cardCode, true)" role="alert">
+                <div ng-message="required">{{ 'ORGANIZATIONS_CREATE_CREDIT_CARD_CODE_REQ_ERR' | translate }}</div>
+                <div ng-message="pattern">{{ 'ORGANIZATIONS_CREATE_CREDIT_CARD_CODE_PATTERN_ERR' | translate }}</div>
+            </div>
+        </md-input-container>
+    </div>
+
+    <div class="layout-row layout-align-start-center flex">
+        <md-input-container class="bm0 rm16 md-block flex">
+            <label>{{::'ORGANIZATIONS_CREATE_CREDIT_CARD_FIRST_NAME_LABEL' | translate}}</label>
+            <input iqs-test-card-name type="text" value="" autocomplete="off" name="customerFirstName" aria-label="CUSTOMER_NAME"
+                   ng-model="$ctrl.item.first_name" required ng-pattern="/^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/" />
+            <div ng-messages="$ctrl.touchedErrorsWithHint($ctrl.form, $ctrl.form.customerFirstName, true)" role="alert">
+                <div ng-message="required">{{ 'ORGANIZATIONS_CREATE_CREDIT_CARD_FIRST_NAME_REQ_ERR' | translate }}</div>
+                <div ng-message="pattern">{{ 'ORGANIZATIONS_CREATE_CREDIT_CARD_FIRST_NAME_PATTERN_ERR' | translate }}</div>
+            </div>
+        </md-input-container>
+        <md-input-container class="bm0 md-block flex">
+            <label>{{::'ORGANIZATIONS_CREATE_CREDIT_CARD_LAST_NAME_LABEL' | translate}}</label>
+            <input iqs-test-card-name type="text" value="" autocomplete="off" name="customerLastName" aria-label="CUSTOMER_NAME"
+                   ng-model="$ctrl.item.last_name" required ng-pattern="/^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/" />
+            <div ng-messages="$ctrl.touchedErrorsWithHint($ctrl.form, $ctrl.form.customerLastName, true)" role="alert">
+                <div ng-message="required">{{ 'ORGANIZATIONS_CREATE_CREDIT_CARD_LAST_NAME_REQ_ERR' | translate }}</div>
+                <div ng-message="pattern">{{ 'ORGANIZATIONS_CREATE_CREDIT_CARD_LAST_NAME_PATTERN_ERR' | translate }}</div>
+            </div>
+        </md-input-container>
+    </div>
+
+    <div>
+        <div class="text-caption">{{::'ORGANIZATIONS_CREATE_CREDIT_CARD_EXPIRED_LABEL' | translate}}</div>
+        <div class="layout-row layout-align-start-center flex">
+            <md-input-container class="bm0 tm0 md-block flex">
+                <md-select class="flex" ng-model="$ctrl.item.expire_month">
+                    <md-option ng-value="opt.id" ng-repeat="opt in $ctrl.months track by opt.id">
+                        {{:: opt.name }}
+                    </md-option>
+                </md-select>
+            </md-input-container>
+            /
+            <md-input-container class="bm0 tm0 md-block flex">
+                <md-select class="flex" ng-model="$ctrl.item.expire_year">
+                    <md-option ng-value="opt" ng-repeat="opt in $ctrl.years track by opt">
+                        {{:: opt }}
+                    </md-option>
+                </md-select>
+            </md-input-container>
+        </div>
+    </div>
+
+    <div ng-if="!$ctrl.pipMedia('gt-sm')">
+        <md-button iqs-test-back class="md-primary md-raised w-stretch flex lm0 rm0 tm16" ng-click="$ctrl.onCancel()">
+            {{ ::'ORGANIZATIONS_CREATE_BACK' | translate }}
+        </md-button>
+        <md-button iqs-test-next class="md-primary md-raised w-stretch flex lm0 rm0 bm0" ng-disabled="$ctrl.isDisabled()"
+                   xxxng-click="$ctrl.onSaveClick()" type="submit">
+            {{ ::'ORGANIZATIONS_CREATE_CREATE' | translate }}
+        </md-button>
+    </div>
+
+    <!--
+    <div class="layout-row layout-align-start-center tm16" ng-if="$ctrl.pipMedia('gt-sm')">
+        <md-button iqs-test-back class="md-primary md-raised w-stretch flex lm0 rm8 bm0" ng-click="$ctrl.onCancel()">
+            {{ ::'ORGANIZATIONS_CREATE_BACK' | translate }}
+        </md-button>
+        <md-button iqs-test-next class="md-primary md-raised w-stretch flex lm8 rm0 bm0" ng-disabled="$ctrl.isDisabled()" xxxng-click="$ctrl.onSaveClick()"
+            type="submit">
+            {{ ::'ORGANIZATIONS_CREATE_CREATE' | translate }}
+        </md-button>
+    </div>
+    -->
+</form>

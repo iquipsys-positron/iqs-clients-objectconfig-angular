@@ -1,0 +1,28 @@
+<pip-document class="pip-scroll ">
+	<div class="pip-body">
+		<div class="layout-row layout-align-center-center">
+			<pip-avatar-edit pip-id="$ctrl.group.id" pip-created="$ctrl.onPictureCreated($event)" pip-changed="$ctrl.onPictureChanged($event)"
+			                 pip-default-text="'Change avatar'" pip-reset="$ctrl.isReseting()" ng-disabled="pictureDisabled"
+			                 pip-rebind="true">
+			</pip-avatar-edit>
+		</div>
+
+		<md-input-container class="md-block flex bm0">
+			<label>{{::'GROUP_NAME' | translate}}</label>
+			<input iqs-test-name ng-model="$ctrl.group.name" required type="text">
+		</md-input-container>
+	</div>
+
+	<div class="pip-footer " style="height: 86px">
+		<div class="pip-action-list w-stretch">
+			<md-button iqs-test-save class="pip-action-list-item" ng-click="$ctrl.saveClick()" ng-disabled="!$ctrl.group.name">
+				<md-icon class="pip-pic" md-svg-icon="icons:check"></md-icon>
+				<div class="pip-title">{{::'SAVE' | translate }}</div>
+			</md-button>
+			<md-button iqs-test-cancel class="pip-action-list-item" ng-click="$ctrl.cancelClick()">
+				<md-icon class="pip-pic" md-svg-icon="icons:cross"></md-icon>
+				<div class="pip-title">{{::'CANCEL' | translate}}</div>
+			</md-button>
+		</div>
+	</div>
+</pip-document>

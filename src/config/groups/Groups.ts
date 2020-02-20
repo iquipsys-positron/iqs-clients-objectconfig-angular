@@ -50,7 +50,8 @@ function configureConfigGroupsAccess(
 (() => {
     angular
         .module('iqsConfigGroups', [
-            'pipNav',
+            'pipNav', 'iqsObjectGroups.ViewModel',
+            'iqsAccessConfig',
             'iqsObjectGroups.Data',
             'iqsConfigGroupsPanel'
         ])

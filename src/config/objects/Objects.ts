@@ -7,7 +7,7 @@ class ConfigObjectsController implements ng.IController {
         private $window: ng.IWindowService,
     ) {
         "ngInject";
-       
+
     }
 
     public onRetry() {
@@ -50,7 +50,15 @@ function configureConfigObjectsAccess(
 (() => {
 
     angular
-        .module('iqsConfigObjects', ['pipNav', 'iqsConfigObjectsPanel'])
+        .module('iqsConfigObjects', [
+            'pipNav', 'iqsObjects.ViewModel',
+            'iqsGlobalSearch',
+
+            'iqsAccessConfig',
+            'iqsConfigObjectsPanel',
+
+            'iqsObjects.SaveService'
+        ])
         .config(configureConfigObjectsRoute)
         .config(configureConfigObjectsAccess);
 })();
